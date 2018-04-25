@@ -8,9 +8,12 @@ spring:
     url: jdbc:mysql://localhost:3306/albums?useSSL=false
     username: root
 
-logging.level:
-  root: WARN
-  org.superbiz.moviefun: DEBUG
+  logging.level:
+    root: WARN
+    org.superbiz.moviefun: DEBUG
+  security:
+    basic:
+      enabled: false
 
 s3:
   accessKey: <access key id>
