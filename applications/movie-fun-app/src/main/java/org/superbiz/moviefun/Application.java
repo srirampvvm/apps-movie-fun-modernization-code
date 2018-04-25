@@ -8,13 +8,16 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.context.annotation.Bean;
+import org.superbiz.moviefun.albumsapi.CoverCatalog;
 import org.superbiz.moviefun.blobstore.BlobStore;
 import org.superbiz.moviefun.blobstore.S3Store;
 import org.superbiz.moviefun.moviesapi.MovieServlet;
 
 @EnableEurekaClient
 @SpringBootApplication
+@EnableHystrix
 public class Application {
 
     public static void main(String... args) {
@@ -29,6 +32,11 @@ public class Application {
     @Bean
     ServiceCredentials serviceCredentials(@Value("${vcap.services}") String vcapServices) {
         return new ServiceCredentials(vcapServices);
+    }
+
+    @Bean
+    public CoverCatalog coverCatalog(BlobStore blobStore) {
+        return new CoverCatalog(blobStore);
     }
 
     @Bean
